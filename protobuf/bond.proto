@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package bondPackage;
+
+service BondServer {
+  rpc load(LoadRequest) returns (LoadResponse) {}
+  rpc predict(LoadRequest) returns (LoadResponse) {}
+}
+
+message LoadRequest {
+  string bitfileName = 1;
+}
+
+message LoadResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message InputRequest {
+  string inputs = 1;
+}
+
+message InputResponse {
+  string outputs = 1;
+}
