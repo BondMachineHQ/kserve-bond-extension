@@ -1,1 +1,2 @@
 python3 -m grpc.tools.protoc --proto_path=. --python_out=. --grpc_python_out=. ./bond.proto
+python -m grpc_tools.protoc -I./protobuf --python_out=./kserve-predictor/bondmodel --pyi_out=./kserve-predictor/bondmodel --grpc_python_out=./kserve-predictor/bondmodel ./protobuf/bond.proto

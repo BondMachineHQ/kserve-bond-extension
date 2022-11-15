@@ -1,5 +1,7 @@
 import kserve
-from typing import Dict
+from typing import Dicimport bond_pb2
+import bond_pb2_grpc
+import grpc
 
 
 class BondModel(kserve.Model):
