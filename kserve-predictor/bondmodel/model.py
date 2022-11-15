@@ -1,5 +1,6 @@
 import kserve
-from typing import Dicimport bond_pb2
+from typing import Dict
+mport bond_pb2
 import bond_pb2_grpc
 import grpc
 
