@@ -4,7 +4,7 @@ package bondPackage;
 
 service BondServer {
   rpc load(LoadRequest) returns (LoadResponse) {}
-  rpc predict(LoadRequest) returns (LoadResponse) {}
+  rpc predict(InputRequest) returns (InputResponse) {}
 }
 
 message LoadRequest {
@@ -21,5 +21,6 @@ message InputRequest {
 }
 
 message InputResponse {
-  string outputs = 1;
+  bool success = 1;
+  string outputs = 2;
 }

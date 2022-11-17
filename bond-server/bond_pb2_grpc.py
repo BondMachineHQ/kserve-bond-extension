@@ -21,8 +21,8 @@ class BondServerStub(object):
                 )
         self.predict = channel.unary_unary(
                 '/bondPackage.BondServer/predict',
-                request_serializer=bond__pb2.LoadRequest.SerializeToString,
-                response_deserializer=bond__pb2.LoadResponse.FromString,
+                request_serializer=bond__pb2.InputRequest.SerializeToString,
+                response_deserializer=bond__pb2.InputResponse.FromString,
                 )
 
 
@@ -51,8 +51,8 @@ def add_BondServerServicer_to_server(servicer, server):
             ),
             'predict': grpc.unary_unary_rpc_method_handler(
                     servicer.predict,
-                    request_deserializer=bond__pb2.LoadRequest.FromString,
-                    response_serializer=bond__pb2.LoadResponse.SerializeToString,
+                    request_deserializer=bond__pb2.InputRequest.FromString,
+                    response_serializer=bond__pb2.InputResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -93,7 +93,7 @@ class BondServer(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/bondPackage.BondServer/predict',
-            bond__pb2.LoadRequest.SerializeToString,
-            bond__pb2.LoadResponse.FromString,
+            bond__pb2.InputRequest.SerializeToString,
+            bond__pb2.InputResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
