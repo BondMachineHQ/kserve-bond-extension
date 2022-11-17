@@ -1,6 +1,6 @@
 import kserve
 from typing import Dict
-mport bond_pb2
+import bond_pb2
 import bond_pb2_grpc
 import grpc
 
@@ -15,7 +15,7 @@ class BondModel(kserve.Model):
     def load(self):
         with grpc.insecure_channel(self.bond_server_uri) as channel:
             stub = bond_pb2_grpc.BondServerStub(channel)
-            response = stub.SayHello(bond_pb2.LoadRequest(bitfileName='DUMMY'))
+            response = stub.SayHello(bond_pb2.LoadRequest(bitfileName='bondmachine_ml'))
             if response.success:
                 print("Load client received: " + response.message)
             else:
@@ -29,6 +29,6 @@ class BondModel(kserve.Model):
 
 
 if __name__ == "__main__":
-    model = BondModel("bond-model")
+    model = BondModel("bond-model", "10.2.1.103:50051")
     model.load()
     kserve.ModelServer(workers=1).start([model])
