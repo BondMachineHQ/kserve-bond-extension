@@ -11,10 +11,12 @@ class InputRequest(_message.Message):
     def __init__(self, inputs: _Optional[str] = ...) -> None: ...
 
 class InputResponse(_message.Message):
-    __slots__ = ["outputs"]
+    __slots__ = ["outputs", "success"]
     OUTPUTS_FIELD_NUMBER: _ClassVar[int]
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
     outputs: str
-    def __init__(self, outputs: _Optional[str] = ...) -> None: ...
+    success: bool
+    def __init__(self, success: bool = ..., outputs: _Optional[str] = ...) -> None: ...
 
 class LoadRequest(_message.Message):
     __slots__ = ["bitfileName"]

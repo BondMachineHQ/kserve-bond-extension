@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import bond_pb2 as bond__pb2
+from .bond_pb2 import *
 
 
 class BondServerStub(object):
@@ -16,13 +16,13 @@ class BondServerStub(object):
         """
         self.load = channel.unary_unary(
                 '/bondPackage.BondServer/load',
-                request_serializer=bond__pb2.LoadRequest.SerializeToString,
-                response_deserializer=bond__pb2.LoadResponse.FromString,
+                request_serializer=LoadRequest.SerializeToString,
+                response_deserializer=LoadResponse.FromString,
                 )
         self.predict = channel.unary_unary(
                 '/bondPackage.BondServer/predict',
-                request_serializer=bond__pb2.LoadRequest.SerializeToString,
-                response_deserializer=bond__pb2.LoadResponse.FromString,
+                request_serializer=InputRequest.SerializeToString,
+                response_deserializer=InputResponse.FromString,
                 )
 
 
@@ -46,13 +46,13 @@ def add_BondServerServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'load': grpc.unary_unary_rpc_method_handler(
                     servicer.load,
-                    request_deserializer=bond__pb2.LoadRequest.FromString,
-                    response_serializer=bond__pb2.LoadResponse.SerializeToString,
+                    request_deserializer=LoadRequest.FromString,
+                    response_serializer=LoadResponse.SerializeToString,
             ),
             'predict': grpc.unary_unary_rpc_method_handler(
                     servicer.predict,
-                    request_deserializer=bond__pb2.LoadRequest.FromString,
-                    response_serializer=bond__pb2.LoadResponse.SerializeToString,
+                    request_deserializer=InputRequest.FromString,
+                    response_serializer=InputResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -76,8 +76,8 @@ class BondServer(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/bondPackage.BondServer/load',
-            bond__pb2.LoadRequest.SerializeToString,
-            bond__pb2.LoadResponse.FromString,
+            LoadRequest.SerializeToString,
+            LoadResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -93,7 +93,7 @@ class BondServer(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/bondPackage.BondServer/predict',
-            bond__pb2.LoadRequest.SerializeToString,
-            bond__pb2.LoadResponse.FromString,
+            InputRequest.SerializeToString,
+            InputResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
