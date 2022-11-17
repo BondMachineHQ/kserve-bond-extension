@@ -46,9 +46,9 @@ class BondFirmwareHandler(object):
         
         return result_from_bm_ml
     
-    def load_bitsteam(self, firmware_name):
+    def load_bitsteam(self, firmware_abs_path):
         
-        self._overlay = Overlay(os.getcwd()+"/"+firmware_name)
+        self._overlay = Overlay(firmware_abs_path)
         self._bm_starting_address  = (self._overlay.ip_dict[self._bm_ip_name]["phys_addr"])
         self._spi0 = MMIO(self._bm_starting_address, 128)
         

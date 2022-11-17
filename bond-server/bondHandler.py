@@ -3,6 +3,9 @@ import bond_pb2_grpc
 import json
 import grpc
 from bondFirmwareHandler import BondFirmwareHandler
+from downloadHandler import DownloadHandler
+import os
+from utils import PrintHandler
 
 class BondHandler(bond_pb2_grpc.BondServerServicer):
 
@@ -13,11 +16,13 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
             if bitfilename == None:
                 return bond_pb2.LoadResponse(success=False, message="Bitfile is necessary")
             
-            print("[DEBUG] Going to download bitstream from somewhere")
+            PrintHandler().print_warning(" * Going to download bitstream * ")
+            DownloadHandler().download_bitstream(bitfilename)
+            PrintHandler().print_success(" * Finish download bitstream * ")
             
-            print("[DEBUG] Loading firmware")
-            #BondFirmwareHandler().load_bitsteam("proj_ebaz4205_neuralbond_expanded.bit")
-            print("[DEBUG] Firmware loaded")
+            PrintHandler().print_warning(" * Loading firmware * ")
+            BondFirmwareHandler().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit")
+            PrintHandler().print_success(" * Firmware loaded * ")
             
         except Exception as err:
             return bond_pb2.LoadResponse(success=False, message=str(err))

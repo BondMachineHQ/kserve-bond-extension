@@ -3,6 +3,7 @@ import grpc
 from concurrent import futures
 from bondHandler import BondHandler
 import sys
+from utils import PrintHandler
 
 def serve():
     
@@ -15,9 +16,9 @@ def serve():
     futures.ThreadPoolExecutor(max_workers=100))
     bond_pb2_grpc.add_BondServerServicer_to_server(BondHandler(), server)
     server.add_insecure_port('[::]:'+port)
-    print("[DEBUG] before starting server on port "+port)
+    PrintHandler().print_warning(" * "+"before starting server on port "+port+" *")
     server.start()
-    print("[DEBUG] after starting server on port "+port)
+    PrintHandler().print_success(" * "+"after starting server on port "+port+" *")
     server.wait_for_termination()
 
 if __name__ == '__main__':
