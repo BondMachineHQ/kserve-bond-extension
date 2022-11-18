@@ -11,19 +11,22 @@ class BondModel(kserve.Model):
         super().__init__(name)
         self.name = name
         self.bond_server_uri = bond_server_uri
+        self.loaded = False
         self.load()
 
     def load(self):
-        print("loading firmware")
-        try:
-            with grpc.insecure_channel(self.bond_server_uri) as channel:
-                stub = BondServerStub(channel)
-                response = stub.load(LoadRequest(bitfileName='bondmachine_ml'))
-                if not response.success:
-                    #https://github.com/kserve/kserve/blob/master/python/sklearnserver/sklearnserver/model.py#L40-L45
-                    raise RuntimeError("Load function failed")
-        except Exception as ex:
-            raise RuntimeError("Load function failed:", ex)
+        if not self.loaded:
+            print("loading firmware")
+            try:
+                with grpc.insecure_channel(self.bond_server_uri) as channel:
+                    stub = BondServerStub(channel)
+                    response = stub.load(LoadRequest(bitfileName='bondmachine_ml'))
+                    if not response.success:
+                        #https://github.com/kserve/kserve/blob/master/python/sklearnserver/sklearnserver/model.py#L40-L45
+                        raise RuntimeError("Load function failed")
+            except Exception as ex:
+                raise RuntimeError("Load function failed:", ex)
+            self.loaded = True
         pass
 
     def predict(self, request: Dict) -> Dict:
