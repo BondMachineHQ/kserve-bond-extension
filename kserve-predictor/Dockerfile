@@ -6,7 +6,7 @@ RUN pip install --no-cache-dir --upgrade pip && python3 -m pip install --no-cach
 
 RUN apt update && apt-get install -y wget
 
-COPY ./ bondmodel
+COPY ./kserve-predictor bondmodel
 RUN cd ./bondmodel && python3 -m pip install --no-cache-dir -e ./
 
 #https://stackoverflow.com/questions/71759248/importerror-cannot-import-name-builder-from-google-protobuf-internal
