@@ -13,16 +13,26 @@ else:
     dummy_input = json.loads(sys.argv[2])
 
 inference_request = {
-  "inputs" : []
+  "inputs": []
 }
+
+#inputs_multiplied = [ dummy_input for _ in range(200) ]
+
+#entry = {
+#     "name" : "input_1",
+#      "shape" : [ len(inputs_multiplied), len(inputs_multiplied[0]) ],
+#      "datatype"  : "FP32",
+#      "data" : inputs_multiplied
+#}
 
 entry = {
      "name" : "input_1",
       "shape" : [ 1, len(dummy_input) ],
       "datatype"  : "FP32",
-      "data" : dummy_input 
+      "data" : dummy_input
 }
 
+print(entry)
 inference_request["inputs"].append(entry)
 
 with open("test.json", "w") as f:
@@ -36,10 +46,10 @@ import time
 # (base) ➜  kserve curl -vvv -H "Content-Type: application/json"  -H "Host: ${SERVICE_HOSTNAME}" -k http://10.2.202.18:31002/v1/models/bond-model:predict -d @fpga-input.json
 
 start = time.time()
-for _ in range(100):
+for _ in range(10):
     response = session.post(f"http://10.2.202.18:31002/v1/models/{model_name}:predict", json = inference_request, headers={"Host": f"{model_name}.default.fpga.infn.it"}) 
 end = time.time()
-#print("Execution time: " + (end - start)/100)
+print("Execution time: " + (end - start)/10)
 
 print("Status Code", response.status_code)
 print("JSON Response ", response.json())
