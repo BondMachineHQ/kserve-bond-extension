@@ -24,9 +24,10 @@ type BondSpec struct {
 	Model  BondModelLayer
 }
 
+// MediaTypes are the whole set of types of layer that can be provided
 var MediaTypes = map[string]string{
 	"FPGAModel": "bond.fpga.model",
-	"Producer":  "bond.fpga.model",
+	"Producer":  "bond.fpga.producer",
 	"Firmware":  "bond.fpga.firmware",
 	"MLModel":   "bond.model+json",
 }

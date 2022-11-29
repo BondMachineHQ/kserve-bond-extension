@@ -49,7 +49,7 @@ start = time.time()
 for _ in range(10):
     response = session.post(f"http://10.2.202.18:31002/v1/models/{model_name}:predict", json = inference_request, headers={"Host": f"{model_name}.default.fpga.infn.it"}) 
 end = time.time()
-print("Execution time: " + (end - start)/10)
+print("Execution time: " + str((end - start)/10))
 
 print("Status Code", response.status_code)
 print("JSON Response ", response.json())
