@@ -6,6 +6,7 @@ from bondFirmwareHandler import BondFirmwareHandler
 from downloadHandler import DownloadHandler
 import os
 from utils import PrintHandler
+import subprocess
 
 class BondHandler(bond_pb2_grpc.BondServerServicer):
 
@@ -18,13 +19,17 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
             
             PrintHandler().print_warning(" * Going to download bitstream * ")
             DownloadHandler().download_bitstream(bitfilename)
+            DownloadHandler().check_bitstream(bitfilename)
+            metadata_info = DownloadHandler().parse_metadata(bitfilename)
             PrintHandler().print_success(" * Finish download bitstream * ")
             
             PrintHandler().print_warning(" * Loading firmware * ")
-            BondFirmwareHandler().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit")
+            if metadata_info["predictor"] == "bondmachine":
+                BondFirmwareHandler().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit", metadata_info["n_outputs"])
             PrintHandler().print_success(" * Firmware loaded * ")
             
         except Exception as err:
+            PrintHandler().print_fail(" * Loaded of bitstream file went wrong  "+str(err)+" *")
             return bond_pb2.LoadResponse(success=False, message=str(err))
             
         return bond_pb2.LoadResponse(success=True, message="Bitstream loaded successfully")

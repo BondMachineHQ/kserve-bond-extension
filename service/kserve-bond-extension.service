@@ -1,0 +1,17 @@
+[Unit]
+Description=kserve bond extension
+
+[Service]
+ExecStart=/usr/bin/python3 /home/xilinx/bond-server/main.py 50051
+WorkingDirectory=/home/xilinx/bond-server/
+Restart=always
+
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=kserve-bond-extension
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

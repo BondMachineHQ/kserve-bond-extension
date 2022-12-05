@@ -47,24 +47,24 @@ class BondFirmwareHandler(object):
         
         return result_from_bm_ml
     
-    def load_bitsteam(self, firmware_abs_path):
+    def load_bitsteam(self, firmware_abs_path, n_output):
         
         self._overlay = Overlay(firmware_abs_path)
         self._bm_starting_address  = (self._overlay.ip_dict[self._bm_ip_name]["phys_addr"])
         self._spi0 = MMIO(self._bm_starting_address, 128)
+        self._n_output = n_output
         
-    def predict(self, input_shape, input_data, n_output):
+    def predict(self, input_shape, input_data):
         
         idx = 0
         results_to_dump = []
         offset = 0
-        self._n_output = n_output
         
         for feature in input_data:
             binToSend = self.get_binary_from_float(feature)
             decToSend = int(binToSend, 2)
             if self._spi0 == None:
-                raise Exception("bitsream not loaded")
+                raise Exception("bitstream not loaded")
             self._spi0.write_mm(offset, decToSend)
             offset = offset + 4 # 4 BYTE = 32 BIT
             
