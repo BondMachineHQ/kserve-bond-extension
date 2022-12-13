@@ -7,9 +7,10 @@ import json
 class DownloadHandler(object):
     
     _instance = None
-    _base_url = "https://minio.131.154.96.42.myip.cloud.infn.it/public/fpga/"
+    _base_url = "https://minio-disabled.131.154.96.42.myip.cloud.infn.it/public/fpga/"
     _download_folder = os.getcwd()
-    _necessary_keys = ["board", "n_inputs", "n_outputs", "benchcore", "predictor", "dataset"]
+    _necessary_keys = ["board", "n_inputs", "n_outputs", "predictor", "dataset"]
+    _predictor = None
 
     def __new__(class_, *args, **kwargs):
         if not isinstance(class_._instance, class_):
@@ -31,7 +32,6 @@ class DownloadHandler(object):
             raise Exception("Downloaded bitstream is not correct")
         
     def parse_metadata(self, bitfile_name):
-        
         f = open(bitfile_name+".json")
         metadata_info = json.load(f)
         f.close()
@@ -41,3 +41,9 @@ class DownloadHandler(object):
                 raise Exception(necessary_key+" key not defined")
             
         return metadata_info
+    
+    def set_predictor(self, value):
+        self._predictor = value
+        
+    def get_predictor(self):
+        return self._predictor
