@@ -1,4 +1,5 @@
 bond-server/__pycache__
+buildfirmware-server/__pycache__
 protobuf/__pycache__
 garbage
 load_data.py

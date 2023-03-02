@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package buildFirmwarePackage;
+
+service BuildFirmwareServer {
+  rpc buildFirmware(BuildFirmwareRequest) returns (BuildFirmwareResponse) {}
+}
+
+message NeuralNetwork {
+    string Nodes = 1;
+    string Weights = 2;
+}
+
+message BuildFirmwareRequest {
+    string projectName = 1;
+    string hlsToolkit  = 2;
+    string targetBoard = 3;
+    int32  nInputs = 4;
+    int32  nOutputs = 5;
+    string flavor = 6;
+    NeuralNetwork neuralNetwork = 7;
+}
+  
+message BuildFirmwareResponse {
+    bool success = 1;
+    string message = 2;
+}
+  
