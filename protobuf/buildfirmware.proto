@@ -6,19 +6,16 @@ service BuildFirmwareServer {
   rpc buildFirmware(BuildFirmwareRequest) returns (BuildFirmwareResponse) {}
 }
 
-message NeuralNetwork {
-    string Nodes = 1;
-    string Weights = 2;
-}
-
 message BuildFirmwareRequest {
-    string projectName = 1;
-    string hlsToolkit  = 2;
-    string targetBoard = 3;
-    int32  nInputs = 4;
-    int32  nOutputs = 5;
-    string flavor = 6;
-    NeuralNetwork neuralNetwork = 7;
+    string uuid = 1;
+    string projectName = 2;
+    string hlsToolkit  = 3;
+    string targetBoard = 4;
+    string projectType = 5;
+    int32  nInputs = 6;
+    int32  nOutputs = 7;
+    string flavor = 8;
+    string sourceNeuralNetwork = 9;
 }
   
 message BuildFirmwareResponse {

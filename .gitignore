@@ -3,3 +3,4 @@ buildfirmware-server/__pycache__
 protobuf/__pycache__
 garbage
 load_data.py
+buildfirmware-server/strategies/__pycache__
