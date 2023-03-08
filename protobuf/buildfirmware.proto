@@ -3,7 +3,7 @@ syntax = "proto3";
 package buildFirmwarePackage;
 
 service BuildFirmwareServer {
-  rpc buildFirmware(BuildFirmwareRequest) returns (BuildFirmwareResponse) {}
+  rpc buildFirmware(BuildFirmwareRequest) returns (stream BuildFirmwareResponse) {}
 }
 
 message BuildFirmwareRequest {

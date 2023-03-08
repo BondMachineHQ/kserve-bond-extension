@@ -1,4 +1,5 @@
 from strategies.bmNNProjectHandler import BMNeuralNetworkProjectHandler
+import buildfirmware_pb2
 
 class BondMachineProjectHandler:
     
@@ -18,11 +19,17 @@ class BondMachineProjectHandler:
         if projectType == None:
             raise Exception("projectType is required")
     
-    def buildProject(self):
+    def build(self):
         if self.request.projectType == "neuralnetwork":
             bmNeuralNetworkProjectHandler = BMNeuralNetworkProjectHandler(self.request)
-            bmNeuralNetworkProjectHandler.build()
-            bmNeuralNetworkProjectHandler.exec()
+            return bmNeuralNetworkProjectHandler.build()
+        else:
+            raise Exception("Project type not handled")
+        
+    def exec(self, cmd):
+        if self.request.projectType == "neuralnetwork":
+            bmNeuralNetworkProjectHandler = BMNeuralNetworkProjectHandler(self.request)
+            bmNeuralNetworkProjectHandler.exec(cmd)
         else:
             raise Exception("Project type not handled")
         

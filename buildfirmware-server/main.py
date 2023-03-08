@@ -38,8 +38,8 @@ def serve():
     #     sys.exit(1)
     
     port = sys.argv[1]
-    server = server = grpc.server(
-    futures.ThreadPoolExecutor(max_workers=100))
+    server = grpc.server(
+    futures.ThreadPoolExecutor(max_workers=10))
     buildfirmware_pb2_grpc.add_BuildFirmwareServerServicer_to_server(BuildFirmwareHandler(), server)
     server.add_insecure_port('[::]:'+port)
     PrintHandler().print_warning(" * "+"before starting server on port "+port+" *")

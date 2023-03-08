@@ -14,7 +14,7 @@ class BuildFirmwareServerStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.buildFirmware = channel.unary_unary(
+        self.buildFirmware = channel.unary_stream(
                 '/buildFirmwarePackage.BuildFirmwareServer/buildFirmware',
                 request_serializer=buildfirmware__pb2.BuildFirmwareRequest.SerializeToString,
                 response_deserializer=buildfirmware__pb2.BuildFirmwareResponse.FromString,
@@ -33,7 +33,7 @@ class BuildFirmwareServerServicer(object):
 
 def add_BuildFirmwareServerServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'buildFirmware': grpc.unary_unary_rpc_method_handler(
+            'buildFirmware': grpc.unary_stream_rpc_method_handler(
                     servicer.buildFirmware,
                     request_deserializer=buildfirmware__pb2.BuildFirmwareRequest.FromString,
                     response_serializer=buildfirmware__pb2.BuildFirmwareResponse.SerializeToString,
@@ -59,7 +59,7 @@ class BuildFirmwareServer(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/buildFirmwarePackage.BuildFirmwareServer/buildFirmware',
+        return grpc.experimental.unary_stream(request, target, '/buildFirmwarePackage.BuildFirmwareServer/buildFirmware',
             buildfirmware__pb2.BuildFirmwareRequest.SerializeToString,
             buildfirmware__pb2.BuildFirmwareResponse.FromString,
             options, channel_credentials,
