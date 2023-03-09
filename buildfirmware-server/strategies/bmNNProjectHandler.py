@@ -13,7 +13,7 @@ class BMNeuralNetworkProjectHandler():
         self.nOutputs = 0
         self.neuralNetwork = ""
         self.flavor = ""
-        self.cmdsToExec = ["bondmachine", "hdl"]
+        self.cmdsToExec = ["bondmachine", "hdl", "design_synthesis"]
         self.check()
                 
     def check(self):
