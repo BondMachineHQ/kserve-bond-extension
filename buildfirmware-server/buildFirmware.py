@@ -22,6 +22,7 @@ class BuildFirmwareHandler(buildfirmware_pb2_grpc.BuildFirmwareServerServicer):
                 bmPrjHandler.checkRequirements()
                 commands = bmPrjHandler.build()
                 for cmd in commands:
+                    yield buildfirmware_pb2.BuildFirmwareResponse(success=True, message="Before exec command: make "+cmd)
                     bmPrjHandler.exec(cmd)
                     yield buildfirmware_pb2.BuildFirmwareResponse(success=True, message="command executed successfully: make "+cmd)
                 

@@ -2,6 +2,7 @@ import subprocess
 import os
 import requests
 from google_drive_downloader import GoogleDriveDownloader as gdd
+
 class BMNeuralNetworkProjectHandler():
     
     def __init__(self, request):
@@ -13,7 +14,7 @@ class BMNeuralNetworkProjectHandler():
         self.nOutputs = 0
         self.neuralNetwork = ""
         self.flavor = ""
-        self.cmdsToExec = ["bondmachine", "hdl", "design_synthesis"]
+        self.cmdsToExec = ["bondmachine", "hdl", "design_synthesis", "design_implementation", "design_bitstream"]
         self.check()
                 
     def check(self):
