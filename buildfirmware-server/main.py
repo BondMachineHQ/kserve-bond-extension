@@ -30,6 +30,11 @@ def serve():
     
     vivadoVersion = sys.argv[2]
     
+    cmdToExec = f'source /tools/Xilinx/Vivado/{vivadoVersion}/settings64.sh'
+    try:
+        output = subprocess.check_output(cmdToExec, shell=True)
+    except subprocess.CalledProcessError as e:
+        raise Exception(f"Command failed with exit code {e.returncode}") from e
     
     # try:
     #     checkDependencies(vivadoVersion)

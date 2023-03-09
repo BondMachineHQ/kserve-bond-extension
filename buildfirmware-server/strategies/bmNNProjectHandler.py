@@ -62,7 +62,7 @@ class BMNeuralNetworkProjectHandler():
         return self.cmdsToExec
     
     def exec(self, command):
-        
+                
         cmdToExec = f'cd {self.request.uuid}/{self.projectName} && make '+command
         
         try:
