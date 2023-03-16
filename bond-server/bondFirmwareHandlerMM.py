@@ -5,7 +5,7 @@ import numpy as np
 import struct
 import time
 
-class BondFirmwareHandler(object):
+class BondFirmwareHandlerMM(object):
     
     _instance = None
     _overlay = None

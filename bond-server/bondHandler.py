@@ -2,7 +2,7 @@ import bond_pb2
 import bond_pb2_grpc
 import json
 import grpc
-from bondFirmwareHandler import BondFirmwareHandler
+from bondFirmwareHandlerMM import BondFirmwareHandlerMM
 from hls4mlFirmwareHandler import Hls4mlFirmwareHandler
 from downloadHandler import DownloadHandler
 import os
@@ -27,7 +27,7 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
             
             PrintHandler().print_warning(" * Loading firmware * ")
             if metadata_info["predictor"] == "bondmachine":
-                BondFirmwareHandler().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit", metadata_info["n_outputs"])
+                BondFirmwareHandlerMM().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit", metadata_info["n_outputs"])
             elif  metadata_info["predictor"] == "hls4ml":
                 Hls4mlFirmwareHandler().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit", (64, metadata_info["n_inputs"]), (64, metadata_info["n_outputs"]))  
             else:
@@ -73,7 +73,7 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
                 
                     reply["name"] = input_name.replace("input_", "output_")
                     
-                    bm_prediction = BondFirmwareHandler().predict(input_shape, input_data)
+                    bm_prediction = BondFirmwareHandlerMM().predict(input_shape, input_data)
                     reply["classification"]["probabilities"] = bm_prediction[:2]
                     reply["classification"]["classification"] = bm_prediction[2]
                     
