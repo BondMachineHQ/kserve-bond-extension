@@ -7,7 +7,7 @@ import json
 class DownloadHandler(object):
     
     _instance = None
-    _base_url = "https://minio-disabled.131.154.96.42.myip.cloud.infn.it/public/fpga/"
+    _base_url = "https://minio.131.154.96.26.myip.cloud.infn.it/fpga-models/"
     _download_folder = os.getcwd()
     _necessary_keys = ["board", "n_inputs", "n_outputs", "predictor", "dataset"]
     _predictor = None

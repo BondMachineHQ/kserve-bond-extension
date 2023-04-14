@@ -14,6 +14,8 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
 
     def load(self, request, context):
         try:
+            PrintHandler().print_warning(" * Request for download arrived * ")
+            
             bitfilename = request.bitfileName
             
             if bitfilename == None:

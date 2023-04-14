@@ -73,8 +73,8 @@ class BondFirmwareHandlerST(object):
             output_buffer = allocate(shape=output_shape, dtype=np.int32)
 
             input_buffer[:]=batches[i]
-            sendchannel.transfer(input_buffer)
-            recvchannel.transfer(output_buffer)
+            self._sendchannel.transfer(input_buffer)
+            self._recvchannel.transfer(output_buffer)
             if fill == True and i == len(batches) - 1:
                 outputs.append(output_buffer[0:last_batch_size])
             else:
