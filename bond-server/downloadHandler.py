@@ -11,6 +11,7 @@ class DownloadHandler(object):
     _download_folder = os.getcwd()
     _necessary_keys = ["board", "n_inputs", "n_outputs", "predictor", "dataset"]
     _predictor = None
+    _flavor = None
 
     def __new__(class_, *args, **kwargs):
         if not isinstance(class_._instance, class_):
@@ -41,6 +42,12 @@ class DownloadHandler(object):
                 raise Exception(necessary_key+" key not defined")
             
         return metadata_info
+    
+    def set_flavor(self, value):
+        self._flavor = value
+        
+    def get_flavor(self):
+        return self._flavor
     
     def set_predictor(self, value):
         self._predictor = value

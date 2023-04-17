@@ -16,6 +16,7 @@ class BMNeuralNetworkProjectHandler():
         self.flavor = ""
         self.cmdsToExec = ["bondmachine", "hdl", "design_synthesis", "design_implementation", "design_bitstream"]
         self.check()
+        self.base_url = "https://minio.131.154.96.26.myip.cloud.infn.it/fpga-firmware/"
                 
     def check(self):
         if self.request.nInputs == None:
@@ -57,7 +58,14 @@ class BMNeuralNetworkProjectHandler():
         # here download the .json description file of the neural network from endpoint
         # https://drive.google.com/file/d/1Duhcy6mGeXWR3exDVe5o0KsLDwuS7LfP/view?usp=share_link
         
-        gdd.download_file_from_google_drive(file_id='1Duhcy6mGeXWR3exDVe5o0KsLDwuS7LfP', dest_path=f'{os.getcwd()}/{self.request.uuid}/{self.projectName}/banknote.json', unzip=False, showsize=False)
+        # files_to_download = [bitfile_name+".bit", bitfile_name+".hwh", bitfile_name+".json"]
+        # for file_to_download in files_to_download:
+            
+        endpoint_url = self._base_url + "banknote.json"
+        response = requests.get(endpoint_url)
+        open(f'{os.getcwd()}/{self.request.uuid}/{self.projectName}/banknote.json', "wb").write(response.content)
+            
+        # gdd.download_file_from_google_drive(file_id='1Duhcy6mGeXWR3exDVe5o0KsLDwuS7LfP', dest_path=f'{os.getcwd()}/{self.request.uuid}/{self.projectName}/banknote.json', unzip=False, showsize=False)
         
         ###########################################################        
         return self.cmdsToExec
