@@ -20,7 +20,7 @@ class BondModel(kserve.Model):
             try:
                 with grpc.insecure_channel(self.bond_server_uri) as channel:
                     stub = BondServerStub(channel)
-                    response = stub.load(LoadRequest(bitfileName='bondmachine_ml'))
+                    response = stub.load(LoadRequest(bitfileName='bm-axist-bankote'))
                     if not response.success:
                         # https://github.com/kserve/kserve/blob/master/python/sklearnserver/sklearnserver/model.py#L40-L45
                         raise RuntimeError("Load function failed")
