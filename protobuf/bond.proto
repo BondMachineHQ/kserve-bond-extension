@@ -9,6 +9,13 @@ service BondServer {
 
 message LoadRequest {
   string bitfileName = 1;
+  string hlsToolkit  = 2;
+  string targetBoard = 3;
+  string projectType = 4;
+  int32  nInputs = 5;
+  int32  nOutputs = 6;
+  string flavor = 7;
+  string sourceNeuralNetwork = 8;
 }
 
 message LoadResponse {

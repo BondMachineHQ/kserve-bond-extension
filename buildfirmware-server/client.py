@@ -6,7 +6,12 @@ import uuid
 
 import random
 import string
-import uuid
+import config
+
+from minio import Minio
+from minio.error import S3Error
+
+import os
 
 def generate_random_name(length):
     letters = string.ascii_lowercase
@@ -24,7 +29,17 @@ def generateJob():
     flavor = "axist",
     sourceNeuralNetwork = "banknote.json")
     
-
+def upload():
+    client = Minio(
+        "minio.131.154.96.26.myip.cloud.infn.it",
+        access_key=config.username,
+        secret_key=config.password,
+    )
+    
+    client.fput_object(
+        "fpga-firmware", "test.txt", os.getcwd()+"/test.txt",
+    )
+     
 def run():
     channel = grpc.insecure_channel('10.2.129.49:50051')
     stub = buildfirmware_pb2_grpc.BuildFirmwareServerStub(channel)
@@ -34,4 +49,5 @@ def run():
         print("Success: ", response.success, " message: ", response.message)
 
 if __name__ == '__main__':
-    run()
+    upload()
+    # run()

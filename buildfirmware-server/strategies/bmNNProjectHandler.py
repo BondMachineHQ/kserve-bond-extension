@@ -61,9 +61,9 @@ class BMNeuralNetworkProjectHandler():
         # files_to_download = [bitfile_name+".bit", bitfile_name+".hwh", bitfile_name+".json"]
         # for file_to_download in files_to_download:
             
-        endpoint_url = self._base_url + "banknote.json"
+        endpoint_url = self.base_url + self.neuralNetwork
         response = requests.get(endpoint_url)
-        open(f'{os.getcwd()}/{self.request.uuid}/{self.projectName}/banknote.json', "wb").write(response.content)
+        open(f'{os.getcwd()}/{self.request.uuid}/{self.projectName}/'+self.neuralNetwork, "wb").write(response.content)
             
         # gdd.download_file_from_google_drive(file_id='1Duhcy6mGeXWR3exDVe5o0KsLDwuS7LfP', dest_path=f'{os.getcwd()}/{self.request.uuid}/{self.projectName}/banknote.json', unzip=False, showsize=False)
         
