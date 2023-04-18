@@ -5,6 +5,7 @@ import grpc
 from bondFirmwareHandlerMM import BondFirmwareHandlerMM
 from bondFirmwareHandlerST import BondFirmwareHandlerST
 from hls4mlFirmwareHandler import Hls4mlFirmwareHandler
+from buildFirmwareHandler import BuildFirmwareHandler
 from downloadHandler import DownloadHandler
 import os
 from utils import PrintHandler
@@ -17,11 +18,35 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
         try:
             PrintHandler().print_warning(" * Request for download arrived * ")
             
-            bitfilename = request.bitfileName
+            bitfilename = request.bitfileName.replace(" ", "")
+            hlsToolkit = request.hlsToolkit.replace(" ", "")
             
             if bitfilename == None:
                 return bond_pb2.LoadResponse(success=False, message="Bitfile is necessary")
             
+            if len(hlsToolkit) != 0:
+                PrintHandler().print_warning(" *  Creation of bitstream requested with toolkit "+hlsToolkit+" * ")
+                
+                targetBoard = request.targetBoard.replace(" ", "")
+                projectType = request.projectType.replace(" ", "")
+                nInputs = request.nInputs
+                nOutputs = request.nOutputs
+                flavor = request.flavor.replace(" ", "")
+                sourceNeuralNetwork = request.sourceNeuralNetwork.replace(" ", "")
+                
+                if len(targetBoard) == 0 or len(projectType) == 0 or len(flavor) == 0 or len(sourceNeuralNetwork) == 0:
+                    return bond_pb2.LoadResponse(success=False, message="You ask to build the firmware, but some information is missing. Check the doc")
+                
+                PrintHandler().print_warning(" *  Going to generate job to build firmware * ")
+                BuildFirmwareHandler().generateJob(
+                    hlsToolkit=hlsToolkit, 
+                    projectType=projectType, 
+                    flavor=flavor, 
+                    nInputs=nInputs,
+                    nOutputs=nOutputs, 
+                    sourceNeuralNetwork=sourceNeuralNetwork,
+                    targetBoard=targetBoard)
+                
             PrintHandler().print_warning(" * Going to download bitstream * ")
             DownloadHandler().download_bitstream(bitfilename)
             DownloadHandler().check_bitstream(bitfilename)

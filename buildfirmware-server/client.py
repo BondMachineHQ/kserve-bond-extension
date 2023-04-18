@@ -49,5 +49,5 @@ def run():
         print("Success: ", response.success, " message: ", response.message)
 
 if __name__ == '__main__':
-    upload()
-    # run()
+    # upload()
+    run()
