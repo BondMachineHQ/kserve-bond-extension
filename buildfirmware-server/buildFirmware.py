@@ -8,6 +8,7 @@ from minio import Minio
 from minio.error import S3Error
 import json
 from subprocess import run
+import config
 
 class BuildFirmwareHandler(buildfirmware_pb2_grpc.BuildFirmwareServerServicer):
     
