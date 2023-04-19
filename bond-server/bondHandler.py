@@ -38,7 +38,7 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
                     return bond_pb2.LoadResponse(success=False, message="You ask to build the firmware, but some information is missing. Check the doc")
                 
                 PrintHandler().print_warning(" *  Going to generate job to build firmware * ")
-                BuildFirmwareHandler().generateJob(
+                bitfilename = BuildFirmwareHandler().generateJob(
                     hlsToolkit=hlsToolkit, 
                     projectType=projectType, 
                     flavor=flavor, 
@@ -46,7 +46,7 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
                     nOutputs=nOutputs, 
                     sourceNeuralNetwork=sourceNeuralNetwork,
                     targetBoard=targetBoard)
-                
+            
             PrintHandler().print_warning(" * Going to download bitstream * ")
             DownloadHandler().download_bitstream(bitfilename)
             DownloadHandler().check_bitstream(bitfilename)

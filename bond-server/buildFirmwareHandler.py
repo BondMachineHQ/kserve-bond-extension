@@ -42,7 +42,10 @@ class BuildFirmwareHandler(object):
         sourceNeuralNetwork = sourceNeuralNetwork)
         
         response_iterator = self._stub.buildFirmware(job)
+        firmware_name = ""
         for response in response_iterator:
+            firmware_name = response.message
             PrintHandler().print_success(response.message)
         
+        return firmware_name
     

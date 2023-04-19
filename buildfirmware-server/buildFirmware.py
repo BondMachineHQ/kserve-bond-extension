@@ -58,9 +58,9 @@ class BuildFirmwareHandler(buildfirmware_pb2_grpc.BuildFirmwareServerServicer):
                 bitfile_path = request.uuid+"/"+bitfile_path_cmd
                 hwh_path = request.uuid+"/"+hwh_path_cmd
                 
-                client.fput_object("fpga-firmware", request.uuid+"_firmware.bit", os.getcwd()+"/"+bitfile_path.replace("\n", ""))
-                client.fput_object("fpga-firmware", request.uuid+"_firmware.hwh", os.getcwd()+"/"+hwh_path.replace("\n", ""))
-                client.fput_object("fpga-firmware", request.uuid+"_firmware.json", os.getcwd()+"/"+request.uuid+"firmware.json")
+                client.fput_object("fpga-models", request.uuid+"_firmware.bit", os.getcwd()+"/"+bitfile_path.replace("\n", ""))
+                client.fput_object("fpga-models", request.uuid+"_firmware.hwh", os.getcwd()+"/"+hwh_path.replace("\n", ""))
+                client.fput_object("fpga-models", request.uuid+"_firmware.json", os.getcwd()+"/"+request.uuid+"firmware.json")
                 
                 run("rm -rf "+os.getcwd()+"/"+request.uuid, capture_output=False, shell=True)
                 run("rm -rf "+os.getcwd()+"/"+request.uuid+"firmware.json", capture_output=False, shell=True)
