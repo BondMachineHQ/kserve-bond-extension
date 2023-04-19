@@ -52,23 +52,20 @@ class BuildFirmwareHandler(buildfirmware_pb2_grpc.BuildFirmwareServerServicer):
                     secret_key=config.password,
                 )
                 
-                bitfile_path_cmd = run("find . -name *.bit", capture_output=True, shell=True).stdout.decode("utf8")[2:]
-                hwh_path_cmd = run("find . -name *.bit", capture_output=True, shell=True).stdout.decode("utf8")[2:]
+                bitfile_path_cmd = run("cd "+request.uuid+" && find . -name *.bit", capture_output=True, shell=True).stdout.decode("utf8")[2:]
+                hwh_path_cmd = run("cd "+request.uuid+" && find . -name *.hwh", capture_output=True, shell=True).stdout.decode("utf8")[2:]
                 
-                bitfile_path = bitfile_path_cmd[:bitfile_path_cmd.rindex(".bit")]+".bit"
-                hwh_path = hwh_path_cmd[:hwh_path_cmd.rindex(".hwh")]+".hwh"
+                bitfile_path = request.uuid+"/"+bitfile_path_cmd
+                hwh_path = request.uuid+"/"+hwh_path_cmd
                 
-                client.fput_object(
-                    "fpga-firmware", request.uuid+"firmware.bit", os.getcwd()+"/"+bitfile_path,
-                )
-                client.fput_object(
-                    "fpga-firmware", request.uuid+"firmware.hwh", os.getcwd()+"/"+hwh_path,
-                )
-                client.fput_object(
-                    "fpga-firmware", request.uuid+"firmware.json", os.getcwd()+"/"+request.uuid+"firmware.json",
-                )
+                client.fput_object("fpga-firmware", request.uuid+"_firmware.bit", os.getcwd()+"/"+bitfile_path.replace("\n", ""))
+                client.fput_object("fpga-firmware", request.uuid+"_firmware.hwh", os.getcwd()+"/"+hwh_path.replace("\n", ""))
+                client.fput_object("fpga-firmware", request.uuid+"_firmware.json", os.getcwd()+"/"+request.uuid+"firmware.json")
                 
-                yield buildfirmware_pb2.BuildFirmwareResponse(success=True, message="Bitstream process ended successfully")
+                run("rm -rf "+os.getcwd()+"/"+request.uuid, capture_output=False, shell=True)
+                run("rm -rf "+os.getcwd()+"/"+request.uuid+"firmware.json", capture_output=False, shell=True)
+
+                yield buildfirmware_pb2.BuildFirmwareResponse(success=True, message=request.uuid+"_firmware")
             else:
                 yield buildfirmware_pb2.BuildFirmwareResponse(success=False, message="hls toolkit not handled")
             
