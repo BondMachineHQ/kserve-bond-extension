@@ -28,7 +28,7 @@ class BondFirmwareHandlerST(object):
         vec[:pad_width[0]] = np.random.uniform(0, 1, size=pad_width[0])
         vec[vec.size-pad_width[1]:] = np.random.uniform(0,1, size=pad_width[1])
     
-    def load_bitsteam(self, firmware_abs_path, n_input, n_output):
+    def load_bitsteam(self, firmware_abs_path, n_input, n_output, benchcore):
         
         # initialize overlay, send and recv channel, n_inputs and n_outputs
         self._overlay = Overlay(firmware_abs_path)
@@ -36,7 +36,7 @@ class BondFirmwareHandlerST(object):
         self._recvchannel = self._overlay.axi_dma_0.recvchannel
         self._n_input = n_input
         self._n_output = n_output
-        
+        self._benchcore = benchcore
         
     def convert_int_to_float(self, number):
         
@@ -108,12 +108,18 @@ class BondFirmwareHandlerST(object):
                 if samples_len < self._batchsize:
                     if idx == samples_len:
                         break
-                    
-                prob_0_float_value = self.convert_int_to_float(out[0])
-                prob_1_float_value = self.convert_int_to_float(out[1])
                 
-                classification = np.argmax([prob_0_float_value, prob_1_float_value])
-                results_to_dump.append([prob_0_float_value, prob_1_float_value, float(classification), float(out[2])])
+                probabilities = []    
+                for i in range(0, self._n_output):
+                    probabilities.append(self.convert_int_to_float(out[i]))
+                
+                classification = np.argmax(np.asarray(probabilities))
+                probabilities.append(float(classification)) # append the classification
+                if self._benchcore == True:
+                    probabilities.append(float(out[self._n_output+1])) # append the benchcore
+                    results_to_dump.append(probabilities)
+                else:
+                    results_to_dump.append(probabilities)
                 
                 idx = idx + 1
         return results_to_dump

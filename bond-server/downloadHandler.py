@@ -9,7 +9,7 @@ class DownloadHandler(object):
     _instance = None
     _base_url = "https://minio.131.154.96.26.myip.cloud.infn.it/fpga-models/"
     _download_folder = os.getcwd()
-    _necessary_keys = ["board", "n_inputs", "n_outputs", "predictor", "dataset"]
+    _necessary_keys = ["board", "n_inputs", "n_outputs", "predictor"]
     _predictor = None
     _flavor = None
 
