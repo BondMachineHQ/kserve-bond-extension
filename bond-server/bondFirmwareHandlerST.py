@@ -6,6 +6,7 @@ import struct
 import time
 import struct
 from pynq import DefaultHierarchy, DefaultIP, allocate
+from utils import PrintHandler
 
 class BondFirmwareHandlerST(object):
     
@@ -51,6 +52,8 @@ class BondFirmwareHandlerST(object):
         x_test = np.asarray(x_test)
         samples_len = len(x_test)
         
+        PrintHandler().print_warning(" * Request to classify "+str(samples_len)+" samples  *")
+        
         batches = []
         outputs = []
         fill = False
@@ -89,10 +92,14 @@ class BondFirmwareHandlerST(object):
 
             input_buffer[:]=batches[i]
             
+            PrintHandler().print_warning(" * Going to transfer data input on AXI DMA channel *")
+            
             self._sendchannel.transfer(input_buffer)
             self._recvchannel.transfer(output_buffer)
             self._sendchannel.wait()
             self._recvchannel.wait()
+            
+            PrintHandler().print_success(" * Data transferred successfully *")
             
             if fill == True and i == len(batches) - 1:
                 outputs.append(output_buffer[0:self._last_batch_size])
@@ -122,4 +129,7 @@ class BondFirmwareHandlerST(object):
                     results_to_dump.append(probabilities)
                 
                 idx = idx + 1
+        
+        PrintHandler().print_success(" * Raw output is "+str(results_to_dump)+" *")
+        
         return results_to_dump

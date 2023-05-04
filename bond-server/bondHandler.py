@@ -47,13 +47,13 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
                     sourceNeuralNetwork=sourceNeuralNetwork,
                     targetBoard=targetBoard)
             
-            PrintHandler().print_warning(" * Going to download bitstream * ")
+            PrintHandler().print_warning(" * Going to download bitstream "+bitfilename+" * ")
             DownloadHandler().download_bitstream(bitfilename)
             DownloadHandler().check_bitstream(bitfilename)
             metadata_info = DownloadHandler().parse_metadata(bitfilename)
-            PrintHandler().print_success(" * Finish download bitstream * ")
+            PrintHandler().print_success(" * Finish download bitstream "+bitfilename+" * ")
             
-            PrintHandler().print_warning(" * Loading firmware * ")
+            PrintHandler().print_warning(" * Going to program FPGA with bitstream requested * ")
             if metadata_info["predictor"] == "bondmachine":
                 DownloadHandler().set_flavor(metadata_info["flavor"])
                 if metadata_info["flavor"] == "aximm":
@@ -71,7 +71,7 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
             
             DownloadHandler().set_predictor(metadata_info["predictor"])
             
-            PrintHandler().print_success(" * Firmware loaded * ")
+            PrintHandler().print_success(" * FPGA programmed successfully * ")
             
         except Exception as err:
             PrintHandler().print_fail(" * Loaded of bitstream file went wrong  "+str(err)+" *")
@@ -85,7 +85,7 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
         try:
             predictor = DownloadHandler().get_predictor()
             
-            PrintHandler().print_warning(" * Request to make prediction with  "+predictor+" *")
+            PrintHandler().print_warning(" * Request to make prediction with  "+predictor+" arrived *")
             # {"inputs": [{"name": "input_1", "shape": [1, 28], "datatype": "FP32", "data": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]}]}
             
             input_parsed = request.inputs.replace("\'", "\"")
@@ -102,6 +102,8 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
             if predictor == "bondmachine":
                 
                 flavor = DownloadHandler().get_flavor()
+                
+                PrintHandler().print_warning(" * Flavor to use is "+flavor+" *")
                 
                 for i in range(0, len(inputs_received)):
                     if flavor == "aximm":

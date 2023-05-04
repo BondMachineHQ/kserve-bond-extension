@@ -43,9 +43,9 @@ def serve():
     futures.ThreadPoolExecutor(max_workers=10))
     buildfirmware_pb2_grpc.add_BuildFirmwareServerServicer_to_server(BuildFirmwareHandler(), server)
     server.add_insecure_port('[::]:'+port)
-    PrintHandler().print_warning(" * "+"before starting server on port "+port+" *")
+    PrintHandler().print_warning(" * "+"Starting GRPC server for firmware generation on port "+port+" *")
     server.start()
-    PrintHandler().print_success(" * "+"after starting server on port "+port+" *")
+    PrintHandler().print_success(" * "+"Running  GRPC server for firmware generation on port "+port+" *")
     server.wait_for_termination()
 
 if __name__ == '__main__':
