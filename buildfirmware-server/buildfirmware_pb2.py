@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x13\x62uildfirmware.proto\x12\x14\x62uildFirmwarePackage\"\xc7\x01\n\x14\x42uildFirmwareRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x13\n\x0bprojectName\x18\x02 \x01(\t\x12\x12\n\nhlsToolkit\x18\x03 \x01(\t\x12\x13\n\x0btargetBoard\x18\x04 \x01(\t\x12\x13\n\x0bprojectType\x18\x05 \x01(\t\x12\x0f\n\x07nInputs\x18\x06 \x01(\x05\x12\x10\n\x08nOutputs\x18\x07 \x01(\x05\x12\x0e\n\x06\x66lavor\x18\x08 \x01(\t\x12\x1b\n\x13sourceNeuralNetwork\x18\t \x01(\t\"9\n\x15\x42uildFirmwareResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t2\x83\x01\n\x13\x42uildFirmwareServer\x12l\n\rbuildFirmware\x12*.buildFirmwarePackage.BuildFirmwareRequest\x1a+.buildFirmwarePackage.BuildFirmwareResponse\"\x00\x30\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x13\x62uildfirmware.proto\x12\x14\x62uildFirmwarePackage\"\xd5\x01\n\x14\x42uildFirmwareRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x13\n\x0bprojectName\x18\x02 \x01(\t\x12\x12\n\nhlsToolkit\x18\x03 \x01(\t\x12\x13\n\x0btargetBoard\x18\x04 \x01(\t\x12\x0c\n\x04\x61rch\x18\x05 \x01(\t\x12\x13\n\x0bprojectType\x18\x06 \x01(\t\x12\x0f\n\x07nInputs\x18\x07 \x01(\x05\x12\x10\n\x08nOutputs\x18\x08 \x01(\x05\x12\x0e\n\x06\x66lavor\x18\t \x01(\t\x12\x1b\n\x13sourceNeuralNetwork\x18\n \x01(\t\"9\n\x15\x42uildFirmwareResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t2\x83\x01\n\x13\x42uildFirmwareServer\x12l\n\rbuildFirmware\x12*.buildFirmwarePackage.BuildFirmwareRequest\x1a+.buildFirmwarePackage.BuildFirmwareResponse\"\x00\x30\x01\x62\x06proto3')
 
 
 
@@ -39,9 +39,9 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   _BUILDFIRMWAREREQUEST._serialized_start=46
-  _BUILDFIRMWAREREQUEST._serialized_end=245
-  _BUILDFIRMWARERESPONSE._serialized_start=247
-  _BUILDFIRMWARERESPONSE._serialized_end=304
-  _BUILDFIRMWARESERVER._serialized_start=307
-  _BUILDFIRMWARESERVER._serialized_end=438
+  _BUILDFIRMWAREREQUEST._serialized_end=259
+  _BUILDFIRMWARERESPONSE._serialized_start=261
+  _BUILDFIRMWARERESPONSE._serialized_end=318
+  _BUILDFIRMWARESERVER._serialized_start=321
+  _BUILDFIRMWARESERVER._serialized_end=452
 # @@protoc_insertion_point(module_scope)

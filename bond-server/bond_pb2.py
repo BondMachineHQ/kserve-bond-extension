@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nbond.proto\x12\x0b\x62ondPackage\"\xc7\x01\n\x0bLoadRequest\x12\x13\n\x0b\x62itfileName\x18\x01 \x01(\t\x12\x15\n\rbuildfirmware\x18\x02 \x01(\x08\x12\x12\n\nhlsToolkit\x18\x03 \x01(\t\x12\x13\n\x0btargetBoard\x18\x04 \x01(\t\x12\x13\n\x0bprojectType\x18\x05 \x01(\t\x12\x0f\n\x07nInputs\x18\x06 \x01(\x05\x12\x10\n\x08nOutputs\x18\x07 \x01(\x05\x12\x0e\n\x06\x66lavor\x18\x08 \x01(\t\x12\x1b\n\x13sourceNeuralNetwork\x18\t \x01(\t\"0\n\x0cLoadResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1e\n\x0cInputRequest\x12\x0e\n\x06inputs\x18\x01 \x01(\t\"1\n\rInputResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07outputs\x18\x02 \x01(\t2\x8f\x01\n\nBondServer\x12=\n\x04load\x12\x18.bondPackage.LoadRequest\x1a\x19.bondPackage.LoadResponse\"\x00\x12\x42\n\x07predict\x12\x19.bondPackage.InputRequest\x1a\x1a.bondPackage.InputResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nbond.proto\x12\x0b\x62ondPackage\"\xd5\x01\n\x0bLoadRequest\x12\x13\n\x0b\x62itfileName\x18\x01 \x01(\t\x12\x15\n\rbuildfirmware\x18\x02 \x01(\x08\x12\x12\n\nhlsToolkit\x18\x03 \x01(\t\x12\x13\n\x0btargetBoard\x18\x04 \x01(\t\x12\x0c\n\x04\x61rch\x18\x05 \x01(\t\x12\x13\n\x0bprojectType\x18\x06 \x01(\t\x12\x0f\n\x07nInputs\x18\x07 \x01(\x05\x12\x10\n\x08nOutputs\x18\x08 \x01(\x05\x12\x0e\n\x06\x66lavor\x18\t \x01(\t\x12\x1b\n\x13sourceNeuralNetwork\x18\n \x01(\t\"0\n\x0cLoadResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1e\n\x0cInputRequest\x12\x0e\n\x06inputs\x18\x01 \x01(\t\"1\n\rInputResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07outputs\x18\x02 \x01(\t2\x8f\x01\n\nBondServer\x12=\n\x04load\x12\x18.bondPackage.LoadRequest\x1a\x19.bondPackage.LoadResponse\"\x00\x12\x42\n\x07predict\x12\x19.bondPackage.InputRequest\x1a\x1a.bondPackage.InputResponse\"\x00\x62\x06proto3')
 
 
 
@@ -55,13 +55,13 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   _LOADREQUEST._serialized_start=28
-  _LOADREQUEST._serialized_end=227
-  _LOADRESPONSE._serialized_start=229
-  _LOADRESPONSE._serialized_end=277
-  _INPUTREQUEST._serialized_start=279
-  _INPUTREQUEST._serialized_end=309
-  _INPUTRESPONSE._serialized_start=311
-  _INPUTRESPONSE._serialized_end=360
-  _BONDSERVER._serialized_start=363
-  _BONDSERVER._serialized_end=506
+  _LOADREQUEST._serialized_end=241
+  _LOADRESPONSE._serialized_start=243
+  _LOADRESPONSE._serialized_end=291
+  _INPUTREQUEST._serialized_start=293
+  _INPUTREQUEST._serialized_end=323
+  _INPUTRESPONSE._serialized_start=325
+  _INPUTRESPONSE._serialized_end=374
+  _BONDSERVER._serialized_start=377
+  _BONDSERVER._serialized_end=520
 # @@protoc_insertion_point(module_scope)

@@ -63,7 +63,7 @@ class BondHandler(bond_pb2_grpc.BondServerServicer):
                         n_outputs = metadata_info["n_outputs"] + 1
                     else:
                         n_outputs = metadata_info["n_outputs"]
-                    BondFirmwareHandlerST().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit", metadata_info["n_inputs"], n_outputs, metadata_info["benchcore"])
+                    BondFirmwareHandlerST().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit", metadata_info["n_inputs"], n_outputs, metadata_info["benchcore"], request.arch)
             elif  metadata_info["predictor"] == "hls4ml":
                 Hls4mlFirmwareHandler().load_bitsteam(os.getcwd()+"/"+bitfilename+".bit", (64, metadata_info["n_inputs"]), (64, metadata_info["n_outputs"]))  
             else:

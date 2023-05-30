@@ -39,6 +39,7 @@ class BuildFirmwareHandler(buildfirmware_pb2_grpc.BuildFirmwareServerServicer):
                 
                 json_bitstream_info = {
                     "board": request.targetBoard,
+                    "arch": request.arch,
                     "n_inputs": request.nInputs,
                     "n_outputs": request.nOutputs,
                     "predictor": hlsToolkit,

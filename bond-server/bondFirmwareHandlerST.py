@@ -19,6 +19,9 @@ class BondFirmwareHandlerST(object):
     _n_input = 0
     _batchsize = 16
     _last_batch_size = 0
+    _arch = None
+    _kernel_name = None
+    _kernel = None
 
     def __new__(class_, *args, **kwargs):
         if not isinstance(class_._instance, class_):
@@ -29,12 +32,18 @@ class BondFirmwareHandlerST(object):
         vec[:pad_width[0]] = np.random.uniform(0, 1, size=pad_width[0])
         vec[vec.size-pad_width[1]:] = np.random.uniform(0,1, size=pad_width[1])
     
-    def load_bitsteam(self, firmware_abs_path, n_input, n_output, benchcore):
+    def load_bitsteam(self, firmware_abs_path, n_input, n_output, benchcore, arch):
         
         # initialize overlay, send and recv channel, n_inputs and n_outputs
         self._overlay = Overlay(firmware_abs_path)
-        self._sendchannel = self._overlay.axi_dma_0.sendchannel
-        self._recvchannel = self._overlay.axi_dma_0.recvchannel
+        self._arch = arch
+        if self._arch == "zynq":
+            self._sendchannel = self._overlay.axi_dma_0.sendchannel
+            self._recvchannel = self._overlay.axi_dma_0.recvchannel
+        elif self._arch == "alveo":
+            self._kernel_name = "krnl_vadd_rtl_1"
+            self._kernel = self._overlay[self._kernel_name]
+            
         self._n_input = n_input
         self._n_output = n_output
         self._benchcore = benchcore
@@ -94,17 +103,21 @@ class BondFirmwareHandlerST(object):
             
             PrintHandler().print_warning(" * Going to transfer data input on AXI DMA channel *")
             
-            self._sendchannel.transfer(input_buffer)
-            self._recvchannel.transfer(output_buffer)
-            self._sendchannel.wait()
-            self._recvchannel.wait()
-            
-            PrintHandler().print_success(" * Data transferred successfully *")
-            
-            if fill == True and i == len(batches) - 1:
-                outputs.append(output_buffer[0:self._last_batch_size])
-            else:
-                outputs.append(output_buffer)
+            if self._arch == "zynq":
+                self._sendchannel.transfer(input_buffer)
+                self._recvchannel.transfer(output_buffer)
+                self._sendchannel.wait()
+                self._recvchannel.wait()
+                
+                PrintHandler().print_success(" * Data transferred successfully *")
+                
+                if fill == True and i == len(batches) - 1:
+                    outputs.append(output_buffer[0:self._last_batch_size])
+                else:
+                    outputs.append(output_buffer)
+            elif self._arch == "alveo":
+                input_buffer.sync_to_device()
+                self._kernel.call(input_buffer, output_buffer)
                 
         results_to_dump = []
 

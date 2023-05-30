@@ -11,11 +11,12 @@ message BuildFirmwareRequest {
     string projectName = 2;
     string hlsToolkit  = 3;
     string targetBoard = 4;
-    string projectType = 5;
-    int32  nInputs = 6;
-    int32  nOutputs = 7;
-    string flavor = 8;
-    string sourceNeuralNetwork = 9;
+    string arch = 5;
+    string projectType = 6;
+    int32  nInputs = 7;
+    int32  nOutputs = 8;
+    string flavor = 9;
+    string sourceNeuralNetwork = 10;
 }
   
 message BuildFirmwareResponse {
