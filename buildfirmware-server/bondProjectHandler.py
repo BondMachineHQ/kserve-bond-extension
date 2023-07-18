@@ -32,7 +32,3 @@ class BondMachineProjectHandler:
             bmNeuralNetworkProjectHandler.exec(cmd)
         else:
             raise Exception("Project type not handled")
-        
-        
-    def startFirmwareGeneration(self):
-        print("Start firmware generation")
